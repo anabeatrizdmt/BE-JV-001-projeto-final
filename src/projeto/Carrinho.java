@@ -11,7 +11,7 @@ public class Carrinho {
     Maquina maquina = new Maquina();
 
     void menu() {
-
+        Estoque.lerEstoque();
         boolean continuar = true;
 
         while (continuar) {
