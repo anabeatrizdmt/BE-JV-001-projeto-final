@@ -6,11 +6,12 @@ import java.util.Map;
 
 public class Carrinho {
 
-    List<List<String>> listaComprados = new ArrayList<>();
+    List<Map<String, Object>> listaComprados = new ArrayList<>();
+
+    Maquina maquina = new Maquina();
 
     void menu() {
 
-        Maquina maquina = new Maquina();
         boolean continuar = true;
 
         while (continuar) {
@@ -32,6 +33,8 @@ public class Carrinho {
     }
 
     public void criarProduto() {
+        Map<String, Object> produto = maquina.pegarDadosProduto();
+        Estoque.listaProdutos.add(produto);
     }
 
     public void editarProduto() {
@@ -41,9 +44,29 @@ public class Carrinho {
     }
 
     public void pesquisarProduto() {
+        String termoPesquisa = maquina.definirPesquisaProdutos();
+
+        for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
+            Map<String, Object> produto = Estoque.listaProdutos.get(i);
+            final var nomeProduto = produto.get("nome").toString();
+            if (nomeProduto.contains(termoPesquisa)) {
+                System.out.println(i + "-" + produto);
+            }
+        }
+
+
+    }
+
+
+    public void listarProdutos() {
+        for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
+            Map<String, Object> produto = Estoque.listaProdutos.get(i);
+            System.out.println(i + "-" + produto);
+        }
     }
 
     public void comprarProduto() {
     }
+
 
 }

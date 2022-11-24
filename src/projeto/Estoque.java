@@ -12,7 +12,7 @@ public class Estoque<T> {
 
     static Path fileName = Path.of("estoque_de_produtos");
 
-    static List<List<String>> listaProdutos = new ArrayList<>();
+    static List<Map<String, Object>> listaProdutos = new ArrayList<>();
 
 
     static List<String> dadosGravarFile = new ArrayList<>();

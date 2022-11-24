@@ -3,6 +3,7 @@ package projeto;
 import monitoria01.crud.model.Aluno;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -29,7 +30,7 @@ public class Maquina {
 
     public Map<String, Object> pegarDadosProduto() {
 
-        Map<String, Object> produto = new HashMap<>();
+        Map<String, Object> produto = new LinkedHashMap<>();
 
         System.out.println("Digite o nome do produto: ");
         produto.put("nome", sc.next());
@@ -43,12 +44,10 @@ public class Maquina {
         return produto;
     }
 
-    public void listarProdutos() {
-
-
+    public String definirPesquisaProdutos() {
+        System.out.println("Digite o nome ou parte do nome do produto:");
+        return sc.next();
     }
-
-
 
 
 }
