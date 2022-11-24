@@ -32,10 +32,13 @@ public class Entrada {
             String valor = sc.nextLine();
             try {
                 retorno = Float.parseFloat(valor);
+                if (retorno < 0) {
+                    throw new NumberFormatException();
+                }
                 repetir = false;
             } catch (NumberFormatException | NullPointerException ex) {
                 System.out.println("""
-                        O valor entrado não é válido, entre com valor numérico.
+                        O valor entrado não é válido, entre com valor numérico positivo.
                         """);
             }
         }
@@ -51,10 +54,13 @@ public class Entrada {
             String valor = sc.nextLine();
             try {
                 retorno = Integer.parseInt(valor);
+                if (retorno < 0) {
+                    throw new NumberFormatException();
+                }
                 repetir = false;
             } catch (NumberFormatException | NullPointerException ex) {
                 System.out.println("""
-                        O valor entrado não é válido, entre com um número inteiro.
+                        O valor entrado não é válido, entre com um número inteiro positivo.
                         """);
             }
         }
