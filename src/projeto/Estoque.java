@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Estoque<T> {
+public class Estoque {
 
     static Path fileName = Path.of("estoque_de_produtos");
 

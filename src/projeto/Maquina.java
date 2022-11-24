@@ -1,13 +1,15 @@
 package projeto;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Maquina {
 
+
     public int pegarEscolhaMenu() {
-        IntStream.range(0, 2).forEach(n-> System.out.println());
+        IntStream.range(0, 2).forEach(n -> System.out.println());
         System.out.println("Digite a opção desejada: ");
         System.out.println("1 - Criar Produtos");
         System.out.println("2 - Editar Produtos");
@@ -83,6 +85,35 @@ public class Maquina {
                     );
                 }
             }
+            System.out.println("\n");
+        }
+    }
+
+    public void listarCarrinho(List<Map<String,Object>> listaCarrinho) {
+
+        if (listaCarrinho.size() == 0) {
+            System.out.println("""
+                                        
+                    O carrinho está vazio.
+                                        
+                    """);
+        } else {
+            System.out.printf(
+                    "%n%n| %-4s | %-25s | %10s | %12s | %13s |%n",
+                    "item", "nome", "preco unit", "quantidade", "Preco total"
+            );
+            for (int i = 0; i < listaCarrinho.size(); i++) {
+                Map<String, Object> produto = listaCarrinho.get(i);
+                System.out.printf(
+                        "|  %03d | %-25s | R$%8.2f | %12d | R$%11.2f |%n",
+                        i, produto.get("nome"), (float) produto.get("preco"), (int) produto.get("quantidade"),
+                        (float) produto.get("preco") * (int) produto.get("quantidade")
+                );
+            }
+            final var valorTotalCarrinho = listaCarrinho.stream()
+                    .map(p -> (float) p.get("preco") * (int) p.get("quantidade"))
+                    .reduce(0f, Float::sum);
+            System.out.printf("%nO valor toral do carrinho é de R$ %.2f%n", valorTotalCarrinho);
             System.out.println("\n");
         }
     }

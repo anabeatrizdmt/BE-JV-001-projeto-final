@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Carrinho {
-
     List<Map<String, Object>> listaComprados = new ArrayList<>();
 
     Maquina maquina = new Maquina();
@@ -35,11 +34,11 @@ public class Carrinho {
     public void criarProduto() {
         Map<String, Object> produto = maquina.pegarDadosProduto();
 
-        final var listaProdutosIguais = Estoque.listaProdutos.stream()
+        final var semProdutosIguais = Estoque.listaProdutos.stream()
                 .filter(p -> p.get("nome").equals(produto.get("nome")))
-                .toList();
+                .toList().isEmpty();
 
-        if (listaProdutosIguais.isEmpty()) {
+        if (semProdutosIguais) {
             Estoque.listaProdutos.add(produto);
         } else {
             System.out.println("""
@@ -54,12 +53,21 @@ public class Carrinho {
         pesquisarProduto();
         int identificadorProduto = maquina.pegarIdentificadorProduto();
 
-        if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
-            System.out.println("editou");
-
-
-        } else {
+        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
             System.out.println("O identificador selecionado é inválido!\n");
+        } else {
+            final var produtoEditado = maquina.pegarDadosProduto();
+            final var semProdutosIguais = Estoque.listaProdutos.stream()
+                    .filter(p -> p.get("nome").equals(produtoEditado.get("nome")))
+                    .toList().isEmpty();
+
+
+
+
+
+            Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
+
+            System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso");
         }
 
 
@@ -87,7 +95,10 @@ public class Carrinho {
         pesquisarProduto();
         int identificadorProduto = maquina.pegarIdentificadorProduto();
 
-        if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
+        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
+            System.out.println("O identificador selecionado é inválido!\n");
+
+        } else {
             final var produtoCompra = Estoque.listaProdutos.get(identificadorProduto);
             final var quantidadeCompra = maquina.pegarQuantidadeProduto();
 
@@ -103,11 +114,8 @@ public class Carrinho {
                 produtoCarrinho.put("quantidade", quantidadeCompra);
                 listaComprados.add(produtoCarrinho);
 
-                System.out.println("Item selecionado colocado no carrinho.\n");
+                maquina.listarCarrinho(listaComprados);
             }
-
-        } else {
-            System.out.println("O identificador selecionado é inválido!\n");
         }
     }
 
