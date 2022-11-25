@@ -1,3 +1,4 @@
 coca;9;1.15
 pepsi;9;2.68
-fanta;9;5.88
+fanta;99;6.88
+pipoca;4;3.25

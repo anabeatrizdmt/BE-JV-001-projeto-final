@@ -50,7 +50,6 @@ public class Carrinho {
     }
 
     public void editarProduto() {
-
         boolean pesquisaVazia = pesquisarProduto();
         if (pesquisaVazia) {
             while (pesquisaVazia) {
@@ -58,7 +57,6 @@ public class Carrinho {
                 pesquisaVazia = pesquisarProduto();
             }
         }
-
         if (Estoque.listaProdutos.size() == 0) {
             System.out.println("Lista de produtos vazia! Nada para editar.");
         } else {
@@ -68,7 +66,7 @@ public class Carrinho {
                 System.out.println("O identificador selecionado é inválido!\n");
             } else {
                 final var produtoEditado = Estoque.listaProdutos.get(identificadorProduto);
-                produtoEditado.put("valor", maquina.pegarPrecoProduto());
+                produtoEditado.put("preco", maquina.pegarPrecoProduto());
                 produtoEditado.put("quantidade", maquina.pegarQuantidadeProduto());
                 Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
                 System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso\n");
@@ -100,8 +98,7 @@ public class Carrinho {
     public boolean pesquisarProduto() {
 
         String termoPesquisa = maquina.definirPesquisaProdutos();
-        boolean pesquisaVazia = maquina.listarProdutos(termoPesquisa);
-        return pesquisaVazia;
+        return maquina.listarProdutos(termoPesquisa);
     }
 
     public void comprarProdutos() {
