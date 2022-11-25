@@ -19,7 +19,7 @@ Regras:
     ☐ Excluir produto, que pega a posição do produto e excluía ele. (Para isso liste os produtos com um identificador 
       sendo a posição do produto)
 
-    ☐ Pesquisa de produtos. Receba o nome ou parte dele, filtre todos os produtos que contém o nome e mostre a lista 
+    ☑️ Pesquisa de produtos. Receba o nome ou parte dele, filtre todos os produtos que contém o nome e mostre a lista 
       filtrada.
 
     ☐ Venda de produtos, onde o usuário pode escolher produtos e quantidades conforme ele queira, assim que escolher 
