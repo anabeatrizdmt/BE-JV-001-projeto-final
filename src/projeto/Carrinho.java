@@ -51,8 +51,8 @@ public class Carrinho {
 
     public void editarProduto() {
         boolean pesquisaVazia = pesquisarProduto();
-        if (pesquisaVazia) {
-            while (pesquisaVazia) {
+        if (!pesquisaVazia) {
+            while (!pesquisaVazia) {
                 System.out.println("Nenhum item encontrado! Tente novamente.");
                 pesquisaVazia = pesquisarProduto();
             }
@@ -76,8 +76,8 @@ public class Carrinho {
 
     public void excluirProduto() {
         boolean pesquisaVazia = pesquisarProduto();
-        if (pesquisaVazia) {
-            while (pesquisaVazia) {
+        if (!pesquisaVazia) {
+            while (!pesquisaVazia) {
                 System.out.println("Nenhum item encontrado! Tente novamente.");
                 pesquisaVazia = pesquisarProduto();
             }
@@ -96,7 +96,6 @@ public class Carrinho {
     }
 
     public boolean pesquisarProduto() {
-
         String termoPesquisa = maquina.definirPesquisaProdutos();
         return maquina.listarProdutos(termoPesquisa);
     }
@@ -114,8 +113,8 @@ public class Carrinho {
 
     public boolean adicionarProdutoCarrinho() {
         boolean pesquisaVazia = pesquisarProduto();
-        if (pesquisaVazia) {
-            while (pesquisaVazia) {
+        if (!pesquisaVazia) {
+            while (!pesquisaVazia) {
                 System.out.println("Nenhum item encontrado! Tente novamente.");
                 pesquisaVazia = pesquisarProduto();
             }
