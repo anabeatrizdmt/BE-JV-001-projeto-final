@@ -40,6 +40,10 @@ public class Carrinho {
 
         if (semProdutosIguais) {
             Estoque.listaProdutos.add(produto);
+            System.out.println("Produto cadastrado com sucesso");
+            maquina.imprimirCabecalho();
+            maquina.imprimirProduto(Estoque.pegarQuantidadeDeProdutos()-1, produto);
+
             Estoque.salvarEstoque();
         } else {
             System.out.println("""

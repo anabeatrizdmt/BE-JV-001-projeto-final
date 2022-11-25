@@ -85,4 +85,7 @@ public class Estoque {
         }
     }
 
+    static int pegarQuantidadeDeProdutos(){
+        return listaProdutos.size();
+    }
 }
