@@ -130,5 +130,11 @@ public class Maquina {
         }
     }
 
+    public boolean confirmarCompra(){
+        System.out.println("\nSe desejar finalizar a compra digite <s>");
+        String resposta = Entrada.lerString();
+        return resposta.equals("s");
+    }
+
 
 }
