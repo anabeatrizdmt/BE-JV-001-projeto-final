@@ -1,5 +1,4 @@
-coca;8;1.15
-pepsi;8;2.68
+coca;6;1.15
+pepsi;1;2.68
 fanta;99;6.88
 pipoca;4;3.25
-biscoito;40;4.44
