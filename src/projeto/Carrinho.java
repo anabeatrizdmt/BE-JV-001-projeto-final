@@ -46,9 +46,9 @@ public class Carrinho {
             Estoque.salvarEstoque();
         } else {
             System.out.println("""
-                       \u001B[33m                 
+                       \u001B[33m
                     Já existe um produto com esse nome! Edite o produto existente ou entre com outro nome.
-                        \u001B[0m                
+                        \u001B[0m
                     """);
         }
     }

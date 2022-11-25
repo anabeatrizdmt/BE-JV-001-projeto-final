@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class Maquina {
 
     public int pegarEscolhaMenu() {
-        IntStream.range(0, 2).forEach(n -> System.out.println());
-        System.out.println("\u001B[36mDigite a opção desejada: ");
+        System.out.println("""
+                \u001B[36m
+                ***********************************
+                *  Loja do Santander-Code by Ada  *
+                ***********************************
+                
+                \u001B[0m""");
+        System.out.println("\u001B[36mDigite a opção desejada: \n");
         System.out.println("1 - Criar Produtos");
         System.out.println("2 - Editar Produtos");
         System.out.println("3 - Excluir Produtos");
@@ -71,7 +76,7 @@ public class Maquina {
             if (!nenhumProdutoEncontrado.contains(false)) {
                 System.out.println(""" 
                         \u001B[33m
-                        Nenhum produto encontrado.                 
+                        Nenhum produto encontrado.
                         \u001B[0m""");
                 return false;
             }
@@ -136,9 +141,9 @@ public class Maquina {
 
         if (listaCarrinho.size() == 0) {
             System.out.println("""
-                    \u001B[31m                    
+                    \u001B[31m
                     O carrinho está vazio.
-                    \u001B[0m                    
+                    \u001B[0m
                     """);
         } else {
             System.out.printf(
