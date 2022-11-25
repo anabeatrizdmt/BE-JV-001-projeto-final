@@ -13,9 +13,7 @@ public class Entrada {
         while (repetir) {
             retorno = sc.nextLine().trim().toLowerCase();
             if (retorno.equals("")) {
-                System.out.println("""
-                        O valor não pode ser vazio ou somente espaços.
-                        """);
+                System.out.println("\u001B[31mO valor não pode ser vazio ou somente espaços.\u001B[0m");
             } else {
                 repetir = false;
             }
@@ -37,9 +35,8 @@ public class Entrada {
                 }
                 repetir = false;
             } catch (NumberFormatException | NullPointerException ex) {
-                System.out.println("""
-                        O valor entrado não é válido, entre com valor numérico positivo.
-                        """);
+                System.out.println("\n\u001B[31mO valor entrado não é válido\u001B[0m");
+                System.out.print("Entre com valor numérico positivo: ");
             }
         }
         return retorno;
@@ -59,9 +56,9 @@ public class Entrada {
                 }
                 repetir = false;
             } catch (NumberFormatException | NullPointerException ex) {
-                System.out.println("""
-                        O valor entrado não é válido, entre com um número inteiro positivo.
-                        """);
+                System.out.println("\u001B[31mO valor entrado não é válido!\u001B[0m");
+                System.out.print("Entre com um número inteiro positivo: ");
+
             }
         }
         return retorno;
