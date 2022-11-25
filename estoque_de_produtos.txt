@@ -8,13 +8,3 @@ paçoca;5;4.0
 doce;4;5.0
 maça;7;5.0
 limão;5;5.0
-coca;1;1.15
-pepsi;0;2.68
-fanta;99;6.88
-pipoca;4;3.25
-cerveja;4;5.0
-bala;8;4.0
-paçoca;5;4.0
-doce;4;5.0
-maça;7;5.0
-limão;5;5.0
