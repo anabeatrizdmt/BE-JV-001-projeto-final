@@ -1,3 +1,4 @@
-coca;4;1.15
+coca;3;1.15
 pepsi;1;2.68
 fanta;1;5.88
+batata inglesa;50;4.2

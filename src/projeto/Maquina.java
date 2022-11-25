@@ -37,6 +37,16 @@ public class Maquina {
         return produto;
     }
 
+    public Map<String, Object> editarDadosProduto(String nome) {
+        Map<String, Object> produto = new LinkedHashMap<>();
+
+        produto.put("nome", nome);
+        produto.put("preco", pegarPrecoProduto());
+        produto.put("quantidade", pegarQuantidadeProduto());
+
+        return produto;
+    }
+
     String pegarNomeProduto() {
         System.out.println("Digite o nome do produto: ");
         return Entrada.lerString();
@@ -57,20 +67,21 @@ public class Maquina {
         return Entrada.lerString();
     }
 
-    public void listarProdutos(String filtro) {
-
+    public boolean listarProdutos(String filtro) {
+        boolean nenhumProdutoEncontrado = false;
         if (Estoque.listaProdutos.size() == 0) {
             System.out.println("""
                                         
                     A lista de produtos está vazia.
                                         
                     """);
+            return nenhumProdutoEncontrado;
         } else {
             System.out.printf(
                     "%n%n| %-13s | %-25s | %10s | %12s |%n",
                     "Identificador", "nome", "preco", "quantidade"
             );
-            boolean nenhumProdutoEncontrado = false;
+
             for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
                 Map<String, Object> produto = Estoque.listaProdutos.get(i);
                 final var nomeProduto = produto.get("nome").toString();
@@ -99,6 +110,7 @@ public class Maquina {
             }
             System.out.println("\n");
         }
+      return nenhumProdutoEncontrado;
     }
 
     public void listarCarrinho(List<Map<String,Object>> listaCarrinho) {
