@@ -38,6 +38,16 @@ public class Maquina {
         return produto;
     }
 
+    public Map<String, Object> editarDadosProduto(String nome) {
+        Map<String, Object> produto = new LinkedHashMap<>();
+
+        produto.put("nome", nome);
+        produto.put("preco", pegarPrecoProduto());
+        produto.put("quantidade", pegarQuantidadeProduto());
+
+        return produto;
+    }
+
     String pegarNomeProduto() {
         System.out.println("Digite o nome do produto: ");
         return Entrada.lerString();
@@ -63,8 +73,7 @@ public class Maquina {
         if (Estoque.listaProdutos.size() == 0) {
             System.out.println("""
                     \u001B[33m
-                    A lista de produtos está vazia.
-                                        
+                    A lista de produtos está vazia.                                   
                     \u001B[0m""");
         } else {
 
@@ -99,6 +108,7 @@ public class Maquina {
             } else if (nomeProduto.contains(filtro)) {
                 if(!nenhumProdutoEncontrado.contains(false)){
                     imprimirCabecalho();
+
                 }
                 imprimirProduto(i, produto);
                 nenhumProdutoEncontrado.add(false);
@@ -132,6 +142,7 @@ public class Maquina {
                 nenhumProdutoEncontrado.add(true);
             }
         }
+
         return nenhumProdutoEncontrado;
     }
 
@@ -163,6 +174,5 @@ public class Maquina {
             System.out.println("\n");
         }
     }
-
 
 }

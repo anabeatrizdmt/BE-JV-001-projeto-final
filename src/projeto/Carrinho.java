@@ -50,71 +50,92 @@ public class Carrinho {
     }
 
     public void editarProduto() {
-        pesquisarProduto();
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
-
-        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-            System.out.println("O identificador selecionado é inválido!\n");
-        } else {
-            final var produtoEditado = maquina.pegarDadosProduto();
-            final var semProdutosIguais = Estoque.listaProdutos.stream()
-                    .filter(p -> p.get("nome").equals(produtoEditado.get("nome")))
-                    .toList().isEmpty();
-
-
-
-
-
-            Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
-
-            System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso");
+        boolean pesquisaVazia = pesquisarProduto();
+        if(pesquisaVazia){
+            while (pesquisaVazia){
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
         }
 
+        if(Estoque.listaProdutos.size() == 0){
+            System.out.println("Lista de produtos vazia! Nada para editar.");
+        }else {
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
 
+            if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
+                System.out.println("O identificador selecionado é inválido!\n");
+            } else {
+                final var produtoEditado = maquina.editarDadosProduto(Estoque.listaProdutos.get(identificadorProduto).get("nome").toString());
+
+                Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
+
+                System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso");
+            }
+        }
     }
 
     public void excluirProduto() {
-        pesquisarProduto();
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
-        if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
-            Estoque.listaProdutos.remove(identificadorProduto);
-            System.out.println("O item selecionado foi removido.\n");
-        } else {
-            System.out.println("O identificador selecionado é inválido!\n");
+        boolean pesquisaVazia = pesquisarProduto();
+        if(pesquisaVazia){
+            while (pesquisaVazia){
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
+        }
+        if(Estoque.listaProdutos.size() == 0){
+            System.out.println("Lista de produtos vazia! Nada para excluir.");
+        }else {
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
+            if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
+                Estoque.listaProdutos.remove(identificadorProduto);
+                System.out.println("O item selecionado foi removido.\n");
+            } else {
+                System.out.println("O identificador selecionado é inválido!\n");
+            }
         }
     }
 
-    public void pesquisarProduto() {
+    public boolean pesquisarProduto() {
 
         String termoPesquisa = maquina.definirPesquisaProdutos();
-        maquina.listarProdutos(termoPesquisa);
+        boolean pesquisaVazia = maquina.listarProdutos(termoPesquisa);
+        return pesquisaVazia;
     }
 
-
     public void comprarProduto() {
-        pesquisarProduto();
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
+        boolean pesquisaVazia = pesquisarProduto();
+        if(pesquisaVazia){
+            while (pesquisaVazia){
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
+        }if(Estoque.listaProdutos.size() == 0){
+            System.out.println("Lista de produtos vazia! Nada para comprar.");
+        }else {
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
 
-        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-            System.out.println("O identificador selecionado é inválido!\n");
+            if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
+                System.out.println("O identificador selecionado é inválido!\n");
 
-        } else {
-            final var produtoCompra = Estoque.listaProdutos.get(identificadorProduto);
-            final var quantidadeCompra = maquina.pegarQuantidadeProduto();
-
-            if (quantidadeCompra > (int) produtoCompra.get("quantidade")) {
-                System.out.println("\nA quantidade selecionada não está disponível.\n");
             } else {
-                final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
-                produtoCompra.put("quantidade", saldo);
+                final var produtoCompra = Estoque.listaProdutos.get(identificadorProduto);
+                final var quantidadeCompra = maquina.pegarQuantidadeProduto();
 
-                Map<String, Object> produtoCarrinho = new LinkedHashMap<>();
-                produtoCarrinho.put("nome", produtoCompra.get("nome"));
-                produtoCarrinho.put("preco", produtoCompra.get("preco"));
-                produtoCarrinho.put("quantidade", quantidadeCompra);
-                listaComprados.add(produtoCarrinho);
+                if (quantidadeCompra > (int) produtoCompra.get("quantidade")) {
+                    System.out.println("\nA quantidade selecionada não está disponível.\n");
+                } else {
+                    final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
+                    produtoCompra.put("quantidade", saldo);
 
-                maquina.listarCarrinho(listaComprados);
+                    Map<String, Object> produtoCarrinho = new LinkedHashMap<>();
+                    produtoCarrinho.put("nome", produtoCompra.get("nome"));
+                    produtoCarrinho.put("preco", produtoCompra.get("preco"));
+                    produtoCarrinho.put("quantidade", quantidadeCompra);
+                    listaComprados.add(produtoCarrinho);
+
+                    maquina.listarCarrinho(listaComprados);
+                }
             }
         }
     }
