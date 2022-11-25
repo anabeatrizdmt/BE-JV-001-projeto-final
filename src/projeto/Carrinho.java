@@ -50,35 +50,58 @@ public class Carrinho {
     }
 
     public void editarProduto() {
-        pesquisarProduto();
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
 
-        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-            System.out.println("O identificador selecionado é inválido!\n");
+        boolean pesquisaVazia = pesquisarProduto();
+        if (pesquisaVazia) {
+            while (pesquisaVazia) {
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
+        }
+
+        if (Estoque.listaProdutos.size() == 0) {
+            System.out.println("Lista de produtos vazia! Nada para editar.");
         } else {
-            final var produtoEditado = Estoque.listaProdutos.get(identificadorProduto);
-            produtoEditado.put("valor", maquina.pegarPrecoProduto());
-            produtoEditado.put("quantidade", maquina.pegarQuantidadeProduto());
-            Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
-            System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso\n");
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
+
+            if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
+                System.out.println("O identificador selecionado é inválido!\n");
+            } else {
+                final var produtoEditado = Estoque.listaProdutos.get(identificadorProduto);
+                produtoEditado.put("valor", maquina.pegarPrecoProduto());
+                produtoEditado.put("quantidade", maquina.pegarQuantidadeProduto());
+                Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
+                System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso\n");
+            }
         }
     }
 
     public void excluirProduto() {
-        pesquisarProduto();// transformar em retorna boolean?
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
-        if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
-            Estoque.listaProdutos.remove(identificadorProduto);
-            System.out.println("O item selecionado foi removido.\n");
+        boolean pesquisaVazia = pesquisarProduto();
+        if (pesquisaVazia) {
+            while (pesquisaVazia) {
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
+        }
+        if (Estoque.listaProdutos.size() == 0) {
+            System.out.println("Lista de produtos vazia! Nada para excluir.");
         } else {
-            System.out.println("O identificador selecionado é inválido!\n");
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
+            if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
+                Estoque.listaProdutos.remove(identificadorProduto);
+                System.out.println("O item selecionado foi removido.\n");
+            } else {
+                System.out.println("O identificador selecionado é inválido!\n");
+            }
         }
     }
 
-    public void pesquisarProduto() {
+    public boolean pesquisarProduto() {
 
         String termoPesquisa = maquina.definirPesquisaProdutos();
-        maquina.listarProdutos(termoPesquisa);
+        boolean pesquisaVazia = maquina.listarProdutos(termoPesquisa);
+        return pesquisaVazia;
     }
 
     public void comprarProdutos() {
@@ -93,44 +116,53 @@ public class Carrinho {
     }
 
     public boolean adicionarProdutoCarrinho() {
-
-        pesquisarProduto();// vai ter bool pra abortar vazio
-        int identificadorProduto = maquina.pegarIdentificadorProduto();
-
-        if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-            System.out.println("O identificador selecionado é inválido!\n");
-            return false;
+        boolean pesquisaVazia = pesquisarProduto();
+        if (pesquisaVazia) {
+            while (pesquisaVazia) {
+                System.out.println("Nenhum item encontrado! Tente novamente.");
+                pesquisaVazia = pesquisarProduto();
+            }
         }
+        if (Estoque.listaProdutos.size() == 0) {
+            System.out.println("Lista de produtos vazia! Nada para comprar.");
+        } else {
+            int identificadorProduto = maquina.pegarIdentificadorProduto();
 
-        final var produtoCompra = Estoque.listaProdutos.get(identificadorProduto);
-        final var quantidadeCompra = maquina.pegarQuantidadeProduto();
+            if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
+                System.out.println("O identificador selecionado é inválido!\n");
+                return false;
+            }
 
-        if (quantidadeCompra > (int) produtoCompra.get("quantidade")) {
-            System.out.println("\nA quantidade selecionada não está disponível.\n");
-            return false;
-        }
+            final var produtoCompra = Estoque.listaProdutos.get(identificadorProduto);
+            final var quantidadeCompra = maquina.pegarQuantidadeProduto();
 
-        final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
-        produtoCompra.put("quantidade", saldo);
+            if (quantidadeCompra > (int) produtoCompra.get("quantidade")) {
+                System.out.println("\nA quantidade selecionada não está disponível.\n");
+                return false;
+            }
 
-        Map<String, Object> produtoCarrinho = new LinkedHashMap<>();
-        produtoCarrinho.put("nome", produtoCompra.get("nome"));
-        produtoCarrinho.put("preco", produtoCompra.get("preco"));
-        produtoCarrinho.put("quantidade", quantidadeCompra);
+            final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
+            produtoCompra.put("quantidade", saldo);
 
-        final var naoTemNoCarrinho = listaComprados.stream()
-                .filter(m -> m.get("nome").equals(produtoCarrinho.get("nome")))
-                .toList().isEmpty();
+            Map<String, Object> produtoCarrinho = new LinkedHashMap<>();
+            produtoCarrinho.put("nome", produtoCompra.get("nome"));
+            produtoCarrinho.put("preco", produtoCompra.get("preco"));
+            produtoCarrinho.put("quantidade", quantidadeCompra);
 
-        if (naoTemNoCarrinho) {
-            listaComprados.add(produtoCarrinho);
-            return true;
-        }
+            final var naoTemNoCarrinho = listaComprados.stream()
+                    .filter(m -> m.get("nome").equals(produtoCarrinho.get("nome")))
+                    .toList().isEmpty();
 
-        for (Map<String, Object> produtoLista : listaComprados) {
-            if (produtoLista.get("nome").equals(produtoCarrinho.get("nome"))) {
-                produtoLista.put("quantidade", (int) produtoLista.get("quantidade") + quantidadeCompra);
-                break;
+            if (naoTemNoCarrinho) {
+                listaComprados.add(produtoCarrinho);
+                return true;
+            }
+
+            for (Map<String, Object> produtoLista : listaComprados) {
+                if (produtoLista.get("nome").equals(produtoCarrinho.get("nome"))) {
+                    produtoLista.put("quantidade", (int) produtoLista.get("quantidade") + quantidadeCompra);
+                    break;
+                }
             }
         }
         return true;
