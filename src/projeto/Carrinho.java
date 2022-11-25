@@ -111,7 +111,7 @@ public class Carrinho {
                 pesquisaVazia = pesquisarProduto();
             }
         }if(Estoque.listaProdutos.size() == 0){
-            System.out.println("Lista de produtos vazia! Nada para excluir.");
+            System.out.println("Lista de produtos vazia! Nada para comprar.");
         }else {
             int identificadorProduto = maquina.pegarIdentificadorProduto();
 
