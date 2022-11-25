@@ -62,45 +62,77 @@ public class Maquina {
 
         if (Estoque.listaProdutos.size() == 0) {
             System.out.println("""
-                                        
+                    \u001B[33m
                     A lista de produtos está vazia.
                                         
-                    """);
+                    \u001B[0m""");
         } else {
-            System.out.printf(
-                    "%n%n| %-13s | %-25s | %10s | %12s |%n",
-                    "Identificador", "nome", "preco", "quantidade"
-            );
-            List<Boolean> nenhumProdutoEncontrado = new ArrayList<>();
-            for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
-                Map<String, Object> produto = Estoque.listaProdutos.get(i);
-                final var nomeProduto = produto.get("nome").toString();
-                if (filtro.equals("*")) {
-                    System.out.printf(
-                            "| % 4d          | %-25s | R$%8.2f | %12d |%n",
-                            i, produto.get("nome"), (float) produto.get("preco"), (int) produto.get("quantidade")
-                    );
-                    nenhumProdutoEncontrado.add(false);
-                } else if (nomeProduto.contains(filtro)) {
-                    System.out.printf(
-                            "| % 4d          | %-25s | R$%8.2f | %12d |%n",
-                            i, produto.get("nome"), (float) produto.get("preco"), (int) produto.get("quantidade")
-                    );
-                    nenhumProdutoEncontrado.add(false);
-                } else {
-                    nenhumProdutoEncontrado.add(true);
-                }
-            }
+
+            imprimirProdutos(filtro);
+
+            List<Boolean> nenhumProdutoEncontrado = retornarSeHaProdutoEncontrao(filtro);
+
             if (!nenhumProdutoEncontrado.contains(false)) {
-                System.out.println("""
-                                    
-                Nenhum produto encontrado.
-                                    
-                """);
+                System.out.println(""" 
+                        \u001B[33m
+                        Nenhum produto encontrado.
+                                            
+                        \u001B[0m""");
                 return false;
             }
         }
         return true;
+    }
+
+    public void imprimirProdutos(String filtro) {
+
+        List<Boolean> nenhumProdutoEncontrado = new ArrayList<>();
+        for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
+            Map<String, Object> produto = Estoque.listaProdutos.get(i);
+            final var nomeProduto = produto.get("nome").toString();
+            if (filtro.equals("*")) {
+                if(!nenhumProdutoEncontrado.contains(false)){
+                    imprimirCabecalho();
+                }
+                imprimirProduto(i, produto);
+                nenhumProdutoEncontrado.add(false);
+            } else if (nomeProduto.contains(filtro)) {
+                if(!nenhumProdutoEncontrado.contains(false)){
+                    imprimirCabecalho();
+                }
+                imprimirProduto(i, produto);
+                nenhumProdutoEncontrado.add(false);
+            }
+        }
+    }
+
+    public void imprimirCabecalho(){
+        System.out.printf(
+                "%n%n| %-13s | %-25s | %10s | %12s |%n",
+                "Identificador", "nome", "preco", "quantidade"
+        );
+    }
+
+    public void imprimirProduto(int i, Map<String, Object> produto){
+        System.out.printf(
+                "| % 4d          | %-25s | R$%8.2f | %12d |%n",
+                i, produto.get("nome"), (float) produto.get("preco"), (int) produto.get("quantidade")
+        );
+    }
+    public List<Boolean> retornarSeHaProdutoEncontrao(String filtro) {
+        List<Boolean> nenhumProdutoEncontrado = new ArrayList<>();
+        for (int i = 0; i < Estoque.listaProdutos.size(); i++) {
+            Map<String, Object> produto = Estoque.listaProdutos.get(i);
+            final var nomeProduto = produto.get("nome").toString();
+            if (filtro.equals("*")) {
+                nenhumProdutoEncontrado.add(false);
+            } else if (nomeProduto.contains(filtro)) {
+                nenhumProdutoEncontrado.add(false);
+            } else {
+                nenhumProdutoEncontrado.add(true);
+            }
+        }
+        return nenhumProdutoEncontrado;
     }
 
     public void listarCarrinho(List<Map<String,Object>> listaCarrinho) {
