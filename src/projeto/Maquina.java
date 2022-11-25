@@ -8,23 +8,22 @@ import java.util.stream.IntStream;
 
 public class Maquina {
 
-
     public int pegarEscolhaMenu() {
         IntStream.range(0, 2).forEach(n -> System.out.println());
-        System.out.println("Digite a opção desejada: ");
+        System.out.println("\u001B[36mDigite a opção desejada: ");
         System.out.println("1 - Criar Produtos");
         System.out.println("2 - Editar Produtos");
         System.out.println("3 - Excluir Produtos");
         System.out.println("4 - Pesquisar Produtos");
         System.out.println("5 - Comprar Produtos");
-        System.out.println("6 - Sair");
-        System.out.println("\n");
+        System.out.println("6 - Sair\u001B[0m");
+        System.out.println();
 
         return Entrada.lerInt();
     }
 
     public int pegarIdentificadorProduto() {
-        System.out.println("Digite o identificador do Produto: ");
+        System.out.print("\nDigite o identificador do Produto: ");
         return Entrada.lerInt();
     }
 
@@ -38,33 +37,23 @@ public class Maquina {
         return produto;
     }
 
-    public Map<String, Object> editarDadosProduto(String nome) {
-        Map<String, Object> produto = new LinkedHashMap<>();
-
-        produto.put("nome", nome);
-        produto.put("preco", pegarPrecoProduto());
-        produto.put("quantidade", pegarQuantidadeProduto());
-
-        return produto;
-    }
-
     String pegarNomeProduto() {
-        System.out.println("Digite o nome do produto: ");
+        System.out.print("\nDigite o nome do produto: ");
         return Entrada.lerString();
     }
 
     Float pegarPrecoProduto() {
-        System.out.println("Digite o preco do produto: ");
+        System.out.print("\nDigite o preco do produto: ");
         return Entrada.lerFloat();
     }
 
     Integer pegarQuantidadeProduto() {
-        System.out.println("Digite a quantidade do produto: ");
+        System.out.print("\nDigite a quantidade do produto: ");
         return Entrada.lerInt();
     }
 
     public String definirPesquisaProdutos() {
-        System.out.println("Digite o nome ou parte do nome do produto: (\"*\" para listar todos)");
+        System.out.print("\nDigite o nome ou parte do nome do produto: (\"*\" para listar todos) ");
         return Entrada.lerString();
     }
 
@@ -75,21 +64,19 @@ public class Maquina {
                     \u001B[33m
                     A lista de produtos está vazia.
                     \u001B[0m""");
+            return false;
         } else {
-
-            imprimirProdutos(filtro);
-
             List<Boolean> nenhumProdutoEncontrado = retornarSeHaProdutoEncontrado(filtro);
 
             if (!nenhumProdutoEncontrado.contains(false)) {
                 System.out.println(""" 
                         \u001B[33m
-                        Nenhum produto encontrado.
-                                            
+                        Nenhum produto encontrado.                 
                         \u001B[0m""");
                 return false;
             }
         }
+        imprimirProdutos(filtro);
         return true;
     }
 
@@ -100,15 +87,14 @@ public class Maquina {
             Map<String, Object> produto = Estoque.listaProdutos.get(i);
             final var nomeProduto = produto.get("nome").toString();
             if (filtro.equals("*")) {
-                if(!nenhumProdutoEncontrado.contains(false)){
+                if (!nenhumProdutoEncontrado.contains(false)) {
                     imprimirCabecalho();
                 }
                 imprimirProduto(i, produto);
                 nenhumProdutoEncontrado.add(false);
             } else if (nomeProduto.contains(filtro)) {
-                if(!nenhumProdutoEncontrado.contains(false)){
+                if (!nenhumProdutoEncontrado.contains(false)) {
                     imprimirCabecalho();
-
                 }
                 imprimirProduto(i, produto);
                 nenhumProdutoEncontrado.add(false);
@@ -116,14 +102,14 @@ public class Maquina {
         }
     }
 
-    public void imprimirCabecalho(){
+    public void imprimirCabecalho() {
         System.out.printf(
                 "%n%n| %-13s | %-25s | %10s | %12s |%n",
                 "Identificador", "nome", "preco", "quantidade"
         );
     }
 
-    public void imprimirProduto(int i, Map<String, Object> produto){
+    public void imprimirProduto(int i, Map<String, Object> produto) {
         System.out.printf(
                 "| % 4d          | %-25s | R$%8.2f | %12d |%n",
                 i, produto.get("nome"), (float) produto.get("preco"), (int) produto.get("quantidade")
@@ -146,13 +132,13 @@ public class Maquina {
         return nenhumProdutoEncontrado;
     }
 
-    public void listarCarrinho(List<Map<String,Object>> listaCarrinho) {
+    public void listarCarrinho(List<Map<String, Object>> listaCarrinho) {
 
         if (listaCarrinho.size() == 0) {
             System.out.println("""
-                                        
+                    \u001B[31m                    
                     O carrinho está vazio.
-                                        
+                    \u001B[0m                    
                     """);
         } else {
             System.out.printf(
@@ -170,13 +156,13 @@ public class Maquina {
             final var valorTotalCarrinho = listaCarrinho.stream()
                     .map(p -> (float) p.get("preco") * (int) p.get("quantidade"))
                     .reduce(0f, Float::sum);
-            System.out.printf("%nO valor toral do carrinho é de R$ %.2f%n", valorTotalCarrinho);
+            System.out.printf("%nO valor total do carrinho é de R$ %.2f%n", valorTotalCarrinho);
             System.out.println("\n");
         }
     }
 
-    public boolean confirmarCompra(){
-        System.out.println("\nSe desejar finalizar a compra digite <s>");
+    public boolean confirmarCompra() {
+        System.out.print("\nSe desejar finalizar a compra digite <s> ");
         String resposta = Entrada.lerString();
         return resposta.equals("s");
     }
