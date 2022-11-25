@@ -35,12 +35,23 @@ public class Estoque {
 
     static void lerEstoque() {
         try {
+            verificarArquivo();
             dadosLidosFile = Files.readAllLines(fileName);
             obterProdutosArquivo();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private static void verificarArquivo() {
+        if (!Files.exists(fileName)){
+            try{
+                Files.createFile(fileName);
+            } catch (IOException exception){
+                exception.printStackTrace();
+            }
+        }
     }
 
     static void obterProdutosArquivo(){
@@ -60,6 +71,8 @@ public class Estoque {
                 listaProdutos.add(produto);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception){
                 System.out.println("Arquivo de dados corrompido");
+                System.out.println("Corrija o arquivo ou delete-o, e rode o programa novamente");
+                System.exit(0);
             }
         }
     }
