@@ -40,6 +40,7 @@ public class Carrinho {
 
         if (semProdutosIguais) {
             Estoque.listaProdutos.add(produto);
+            Estoque.salvarEstoque();
         } else {
             System.out.println("""
                                         
@@ -69,6 +70,8 @@ public class Carrinho {
                 produtoEditado.put("preco", maquina.pegarPrecoProduto());
                 produtoEditado.put("quantidade", maquina.pegarQuantidadeProduto());
                 Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
+                Estoque.dadosGravarFile.clear();
+                Estoque.salvarEstoque();
                 System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso\n");
             }
         }
@@ -89,6 +92,8 @@ public class Carrinho {
             if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
                 Estoque.listaProdutos.remove(identificadorProduto);
                 System.out.println("O item selecionado foi removido.\n");
+                Estoque.dadosGravarFile.clear();
+                Estoque.salvarEstoque();
             } else {
                 System.out.println("O identificador selecionado é inválido!\n");
             }
@@ -139,6 +144,8 @@ public class Carrinho {
 
             final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
             produtoCompra.put("quantidade", saldo);
+            Estoque.dadosGravarFile.clear();
+            Estoque.salvarEstoque();
 
             Map<String, Object> produtoCarrinho = new LinkedHashMap<>();
             produtoCarrinho.put("nome", produtoCompra.get("nome"));
