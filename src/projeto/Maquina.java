@@ -10,20 +10,20 @@ public class Maquina {
 
     public int pegarEscolhaMenu() {
         IntStream.range(0, 2).forEach(n -> System.out.println());
-        System.out.println("Digite a opção desejada: ");
+        System.out.println("\u001B[36mDigite a opção desejada: ");
         System.out.println("1 - Criar Produtos");
         System.out.println("2 - Editar Produtos");
         System.out.println("3 - Excluir Produtos");
         System.out.println("4 - Pesquisar Produtos");
         System.out.println("5 - Comprar Produtos");
-        System.out.println("6 - Sair");
-        System.out.println("\n");
+        System.out.println("6 - Sair\u001B[0m");
+        System.out.println();
 
         return Entrada.lerInt();
     }
 
     public int pegarIdentificadorProduto() {
-        System.out.println("Digite o identificador do Produto: ");
+        System.out.print("\nDigite o identificador do Produto: ");
         return Entrada.lerInt();
     }
 
@@ -38,22 +38,22 @@ public class Maquina {
     }
 
     String pegarNomeProduto() {
-        System.out.println("Digite o nome do produto: ");
+        System.out.print("\nDigite o nome do produto: ");
         return Entrada.lerString();
     }
 
     Float pegarPrecoProduto() {
-        System.out.println("Digite o preco do produto: ");
+        System.out.print("\nDigite o preco do produto: ");
         return Entrada.lerFloat();
     }
 
     Integer pegarQuantidadeProduto() {
-        System.out.println("Digite a quantidade do produto: ");
+        System.out.print("\nDigite a quantidade do produto: ");
         return Entrada.lerInt();
     }
 
     public String definirPesquisaProdutos() {
-        System.out.println("Digite o nome ou parte do nome do produto: (\"*\" para listar todos)");
+        System.out.print("\nDigite o nome ou parte do nome do produto: (\"*\" para listar todos) ");
         return Entrada.lerString();
     }
 
@@ -71,8 +71,7 @@ public class Maquina {
             if (!nenhumProdutoEncontrado.contains(false)) {
                 System.out.println(""" 
                         \u001B[33m
-                        Nenhum produto encontrado.
-                                            
+                        Nenhum produto encontrado.                 
                         \u001B[0m""");
                 return false;
             }
@@ -137,9 +136,9 @@ public class Maquina {
 
         if (listaCarrinho.size() == 0) {
             System.out.println("""
-                                        
+                    \u001B[31m                    
                     O carrinho está vazio.
-                                        
+                    \u001B[0m                    
                     """);
         } else {
             System.out.printf(
@@ -163,7 +162,7 @@ public class Maquina {
     }
 
     public boolean confirmarCompra() {
-        System.out.println("\nSe desejar finalizar a compra digite <s>");
+        System.out.print("\nSe desejar finalizar a compra digite <s> ");
         String resposta = Entrada.lerString();
         return resposta.equals("s");
     }

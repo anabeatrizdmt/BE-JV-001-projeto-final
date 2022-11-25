@@ -43,9 +43,9 @@ public class Carrinho {
             Estoque.salvarEstoque();
         } else {
             System.out.println("""
-                                        
+                       \u001B[33m                 
                     Já existe um produto com esse nome! Edite o produto existente ou entre com outro nome.
-                                        
+                        \u001B[0m                
                     """);
         }
     }
@@ -54,17 +54,17 @@ public class Carrinho {
         boolean pesquisaVazia = pesquisarProduto();
         if (!pesquisaVazia) {
             while (!pesquisaVazia) {
-                System.out.println("Nenhum item encontrado! Tente novamente.");
+                System.out.println("\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
                 pesquisaVazia = pesquisarProduto();
             }
         }
         if (Estoque.listaProdutos.size() == 0) {
-            System.out.println("Lista de produtos vazia! Nada para editar.");
+            System.out.println("\u001B[31mLista de produtos vazia! Nada para editar.\u001B[0m");
         } else {
             int identificadorProduto = maquina.pegarIdentificadorProduto();
 
             if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-                System.out.println("O identificador selecionado é inválido!\n");
+                System.out.println("\u001B[31mO identificador selecionado é inválido!\u001B[0m");
             } else {
                 final var produtoEditado = Estoque.listaProdutos.get(identificadorProduto);
                 produtoEditado.put("preco", maquina.pegarPrecoProduto());
@@ -81,12 +81,12 @@ public class Carrinho {
         boolean pesquisaVazia = pesquisarProduto();
         if (!pesquisaVazia) {
             while (!pesquisaVazia) {
-                System.out.println("Nenhum item encontrado! Tente novamente.");
+                System.out.println("\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
                 pesquisaVazia = pesquisarProduto();
             }
         }
         if (Estoque.listaProdutos.size() == 0) {
-            System.out.println("Lista de produtos vazia! Nada para excluir.");
+            System.out.println("\u001B[31mLista de produtos vazia! Nada para excluir.\u001B[0m");
         } else {
             int identificadorProduto = maquina.pegarIdentificadorProduto();
             if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
@@ -95,7 +95,7 @@ public class Carrinho {
                 Estoque.dadosGravarFile.clear();
                 Estoque.salvarEstoque();
             } else {
-                System.out.println("O identificador selecionado é inválido!\n");
+                System.out.println("\u001B[31mO identificador selecionado é inválido!\u001B[0m");
             }
         }
     }
@@ -120,17 +120,17 @@ public class Carrinho {
         boolean pesquisaVazia = pesquisarProduto();
         if (!pesquisaVazia) {
             while (!pesquisaVazia) {
-                System.out.println("Nenhum item encontrado! Tente novamente.");
+                System.out.println("\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
                 pesquisaVazia = pesquisarProduto();
             }
         }
         if (Estoque.listaProdutos.size() == 0) {
-            System.out.println("Lista de produtos vazia! Nada para comprar.");
+            System.out.println("\u001B[31mLista de produtos vazia! Nada para comprar.\u001B[0m");
         } else {
             int identificadorProduto = maquina.pegarIdentificadorProduto();
 
             if (identificadorProduto < 0 || identificadorProduto >= Estoque.listaProdutos.size()) {
-                System.out.println("O identificador selecionado é inválido!\n");
+                System.out.println("\u001B[31mO identificador selecionado é inválido!\u001B[0m");
                 return false;
             }
 
@@ -138,7 +138,11 @@ public class Carrinho {
             final var quantidadeCompra = maquina.pegarQuantidadeProduto();
 
             if (quantidadeCompra > (int) produtoCompra.get("quantidade")) {
-                System.out.println("\nA quantidade selecionada não está disponível.\n");
+                System.out.println("\n\u001B[31mA quantidade selecionada não está disponível.\n\u001B[0m");
+                return false;
+            }
+            if (quantidadeCompra == 0) {
+                System.out.println("\n\u001B[31mNão é possível adicionar a quantidade '0'.\n\u001B[0m");
                 return false;
             }
 

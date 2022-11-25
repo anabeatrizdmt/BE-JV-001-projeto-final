@@ -70,8 +70,8 @@ public class Estoque {
                 produto.put("preco", preco);
                 listaProdutos.add(produto);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception){
-                System.out.println("Arquivo de dados corrompido");
-                System.out.println("Corrija o arquivo ou delete-o, e rode o programa novamente");
+                System.out.println("\u001B[31mArquivo de dados corrompido\u001B[0m");
+                System.out.println("\u001B[33mCorrija o arquivo ou delete-o, e rode o programa novamente\u001B[0m");
                 System.exit(0);
             }
         }
