@@ -161,6 +161,7 @@ public class Maquina {
             final var valorTotalCarrinho = listaCarrinho.stream()
                     .map(p -> (float) p.get("preco") * (int) p.get("quantidade"))
                     .reduce(0f, Float::sum);
+            System.out.println("==================================================================================");
             System.out.printf("%nO valor total do carrinho é de R$ %.2f%n", valorTotalCarrinho);
             System.out.println("\n");
         }

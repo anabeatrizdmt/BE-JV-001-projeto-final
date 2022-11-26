@@ -40,7 +40,7 @@ public class Carrinho {
 
         if (semProdutosIguais) {
             Estoque.listaProdutos.add(produto);
-            System.out.println("Produto cadastrado com sucesso");
+            System.out.println("\n\u001B[32mProduto cadastrado com sucesso\u001B[0m");
             maquina.imprimirCabecalho();
             maquina.imprimirProduto(Estoque.pegarQuantidadeDeProdutos()-1, produto);
 
@@ -58,7 +58,7 @@ public class Carrinho {
         boolean pesquisaVazia = pesquisarProduto();
         if (!pesquisaVazia) {
             while (!pesquisaVazia) {
-                System.out.println("\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
+                System.out.println("\n\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
                 pesquisaVazia = pesquisarProduto();
             }
         }
@@ -74,9 +74,8 @@ public class Carrinho {
                 produtoEditado.put("preco", maquina.pegarPrecoProduto());
                 produtoEditado.put("quantidade", maquina.pegarQuantidadeProduto());
                 Estoque.listaProdutos.set(identificadorProduto, produtoEditado);
-                Estoque.dadosGravarFile.clear();
                 Estoque.salvarEstoque();
-                System.out.println("Produto com identificador " + identificadorProduto + " editado com sucesso\n");
+                System.out.println("\n\u001B[32mProduto com identificador " + identificadorProduto + " editado com sucesso\u001B[0m");
             }
         }
     }
@@ -85,7 +84,7 @@ public class Carrinho {
         boolean pesquisaVazia = pesquisarProduto();
         if (!pesquisaVazia) {
             while (!pesquisaVazia) {
-                System.out.println("\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
+                System.out.println("\n\u001B[31mNenhum item encontrado! Tente novamente.\u001B[0m");
                 pesquisaVazia = pesquisarProduto();
             }
         }
@@ -95,8 +94,7 @@ public class Carrinho {
             int identificadorProduto = maquina.pegarIdentificadorProduto();
             if (identificadorProduto >= 0 && identificadorProduto < Estoque.listaProdutos.size()) {
                 Estoque.listaProdutos.remove(identificadorProduto);
-                System.out.println("O item selecionado foi removido.\n");
-                Estoque.dadosGravarFile.clear();
+                System.out.println("\n\u001B[32mO item selecionado foi removido.\u001B[0m");
                 Estoque.salvarEstoque();
             } else {
                 System.out.println("\u001B[31mO identificador selecionado é inválido!\u001B[0m");
@@ -152,7 +150,6 @@ public class Carrinho {
 
             final var saldo = (int) produtoCompra.get("quantidade") - quantidadeCompra;
             produtoCompra.put("quantidade", saldo);
-            Estoque.dadosGravarFile.clear();
             Estoque.salvarEstoque();
 
             Map<String, Object> produtoCarrinho = new LinkedHashMap<>();

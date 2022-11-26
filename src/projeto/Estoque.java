@@ -21,6 +21,7 @@ public class Estoque {
 
     static void salvarEstoque() {
         try {
+            dadosGravarFile.clear();
             concatenarDadosArquivo();
             Files.write(fileName, dadosGravarFile);
 
