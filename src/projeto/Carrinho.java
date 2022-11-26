@@ -27,6 +27,7 @@ public class Carrinho {
             }
         }
         Entrada.sc.close();
+        Estoque.salvarEstoque();
         System.out.println("Saindo do sistema...");
     }
 
